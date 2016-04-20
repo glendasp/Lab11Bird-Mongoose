@@ -33,7 +33,8 @@ router.post('/', function(req, res, next ){
   //Build nested nestData
   req.body.nestData = {
     'location': req.body.location,
-    'materials': req.body.materials
+    'materials': req.body.materials,
+    'description': req.body.description
   };
 
 
@@ -85,9 +86,54 @@ router.post('/addDate', function(req, res, next){
 
     bird.save(function(err){
       if (err) { return next(err);}
-      res.redirect('/')
+      res.redirect('/');
     });
-  })
+  });
 });
+
+
+//Delete Bird function - new
+router.post ('/removeBird', function(req, res, next) {
+
+  //Looking for the brid first
+  Bird.findOne({name: req.body.name}, function (err, bird) {
+    if (err) {
+      return next(err)
+    }
+    //If no bird found, send error message
+    if (!bird) {
+      return next(new Error('No bird found with name' + req.body.name))
+    }
+    Bird.remove({name: req.body.name}, function (err) {
+      if (err) {
+        return next(err);
+      }
+      res.redirect('/');
+    });
+  });
+});
+
+
+//Update information about a bird
+
+router.post('/updateBird', function(req,res,next) {
+  var filter = {"name": req.body.name};
+  var update = {$set: req.body};
+  //By default, findOneAndUpdate replaces the record with the update.
+  //So, here, need to use $set parameter to specify we want to update only the fields given.
+
+  db.collection("Bird").findOneAndUpdate(filter, update, function (err, result) {
+    if (err) {
+      console.log("Error when updating description " + err);
+      return res.sendStatus(500);
+    } else {
+      console.log("Updated - result: " + result);
+      return res.send({"description": req.body.description});
+      //Send the updated back. AJAX is expecting a response.
+    }
+  });
+
+});
+
 
 module.exports = router;

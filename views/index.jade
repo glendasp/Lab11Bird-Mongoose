@@ -8,6 +8,8 @@ block content
     for bird in birds
       p Name: #{bird.name}
       p Description: #{bird.description}
+        span#birdDescription #{bird.description}
+
       p Average Eggs Laid: #{bird.averageEggsLaid}
       p Nest location #{bird.nestData.location}
       p Nest Materials #{bird.nestData.materials}
@@ -24,6 +26,11 @@ block content
           input(name="dateSeen" type="date" required)
         input(name="name" value="#{bird.name}" hidden)
         input(name="addDate" type="submit" value="Add new date")
+
+      form(action="/removeBird", method="POST")
+
+        input(name="name" value="#{bird.name}" hidden)
+        input(name="Delete" type="submit" value="Delete bird")
 
 
       hr
@@ -55,3 +62,10 @@ block content
         input(name="dateSeen" type="date")
       br
       input(type="submit" name="addBird" value="Add new sighting")
+
+
+      script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js")
+      script(src="/javascripts/updateBirdDesc.js")
+
+
+

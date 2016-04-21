@@ -116,7 +116,7 @@ router.post ('/removeBird', function(req, res, next) {
 
 //Update information about a bird
 
-router.post('/updateBird', function(req,res,next) {
+router.put('/updateBird', function(req,res,next) {
   var filter = {"name": req.body.name};
   var update = {$set: req.body};
   //By default, findOneAndUpdate replaces the record with the update.

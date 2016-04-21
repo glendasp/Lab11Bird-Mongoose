@@ -7,14 +7,12 @@ $(document).ready(function(){
 
         if ($('#NewDescription').length === 1) { return; }
 
-        var input = $("<input id='newDescription' placeholder='new description'></input>").toLowerCase();
-        //var lower = input.toLowerCase();
+        var input = $("<input id='newDescription' placeholder='new description'></input>")
 
-        (input).insertAfter($(this));
+        input.insertAfter($(this));
 
-        var instructions = $("<i>Press Enter to save, Esc to cancel</i>");
-        instructions.insertAfter(lower);
-
+        var instructions = $("<i> -- Press Enter to save, Esc to cancel -- </i>");
+        instructions.insertAfter($(this));
 
         input.keypress(function(event){
             //Submit changes by pressing enter
